@@ -82,6 +82,37 @@
             navMenu.classList.toggle('active');
         });
 
+        // Dropdown Menu Toggle - Works on all devices
+        const dropdownItems = document.querySelectorAll('.nav-menu li.dropdown');
+        const dropdownTriggers = document.querySelectorAll('.nav-menu li.dropdown > a');
+
+        dropdownTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                const parentLi = this.parentElement;
+                const dropdownMenu = parentLi.querySelector('.dropdown-menu');
+                
+                // Close other dropdowns
+                dropdownItems.forEach(item => {
+                    if (item !== parentLi) {
+                        item.querySelector('.dropdown-menu').classList.remove('active');
+                    }
+                });
+                
+                // Toggle current dropdown
+                dropdownMenu.classList.toggle('active');
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-menu li.dropdown')) {
+                dropdownItems.forEach(item => {
+                    item.querySelector('.dropdown-menu').classList.remove('active');
+                });
+            }
+        });
+
         // Close menu when a link is clicked
         const navLinks = document.querySelectorAll('.nav-menu a');
         navLinks.forEach(link => {
